@@ -1,3 +1,16 @@
+/**
+ * @file This service handles all interactions with the Google Gemini API.
+ *
+ * NOTE ON API KEY SECURITY:
+ * The API key is accessed via `process.env.API_KEY`. This is a secure practice
+ * for handling sensitive credentials.
+ *
+ * In a secure deployment environment (like the one this app is designed for),
+ * the `API_KEY` is injected as an environment variable at runtime. It is never
+ * hardcoded or exposed in the client-side code that is sent to the user's browser.
+ * This ensures that your API key remains confidential and cannot be viewed by
+ * application users.
+ */
 import { GoogleGenAI } from "@google/genai";
 import type { GroundingChunk } from '../types';
 
