@@ -31,7 +31,7 @@ export const mockDocuments: Document[] = [
     type: 'png',
     uploadDate: '2023-08-20T18:00:00Z',
     tags: ['Certificate'],
-    url: 'https://via.placeholder.com/150/24f355',
+    url: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMTUwIDE1MCIgZmlsbD0ibm9uZSI+IDxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZWVmMmZmIi8+IDxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjExMCIgaGVpZ2h0PSIxMTAiIHJ4PSI1IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM0ZjQ2ZTUiIHN0cm9rZS13aWR0aD0iMiIvPiA8dGV4dCB4PSI3NSIgeT0iNjAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMzczMGEzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5DZXJ0aWZpY2F0ZSBvZjwvdGV4dD4gPHRleHQgeD0iNzUiIHk9IjgwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMzNzMwYTMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkRhdGEgU2NpZW5jZTwvdGV4dD4gPHRleHQgeD0iNzUiIHk9IjEwNSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NDc0OGIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkF3YXJkZWQgdG88L3RleHQ+IDx0ZXh0IHg9Ijc1IiB5PSIxMTgiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzY0NzQ4YiIgdGVh0LWFuY2hvcj0ibWlkZGxlIj5JSVNFUkIgU3R1ZGVudDwvdGV4dD4gPC9zdmc+',
   },
   {
     id: '5',
@@ -79,7 +79,7 @@ export const mockDocuments: Document[] = [
     type: 'jpg',
     uploadDate: '2023-09-05T19:00:00Z',
     tags: ['Skill'],
-    url: 'https://via.placeholder.com/150/f66b97',
+    url: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMTUwIDE1MCIgZmlsbD0ibm9uZSI+IDxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZmZmYmU4Ii8+IDxwYXRoIGQ9Ik00MCAxMTAgTDc1IDQwIEwxMTAgMTEwIFoiIGZpbGw9IiM0ZjQ2ZTUiIG9wYWNpdHk9IjAuMiIvPiA8cGF0aCBkPSJNMjUgOTAgTDc1IDYwIEwxMjUgOTAgTDc1IDEyMCBaIiBmaWxsPSIjNGY0NmU1IiBvcGFjaXR5PSIwLjYiLz4gPHRleHQgeD0iNzUiIHk9IjEzNSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMzczMGEzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5VSSBEZXNpZ24gV29ya3Nob3A8L3RleHQ+IDwvc3ZnPg==',
   },
    {
     id: '11',
