@@ -44,8 +44,9 @@ SkillHub is a modern, responsive web application designed specifically for stude
 - **AI & Grounding**: Google Gemini API
 - **File Handling**: (Demonstration) File uploads are simulated and handled locally using browser APIs (`URL.createObjectURL`) for this version.
 
-### A Note on the Build Process
+### A Note on the Development Environment
 
-This project uses the Tailwind CSS Play CDN for rapid prototyping. This is ideal for development and demonstration but is not recommended for production due to its runtime performance overhead.
+This project utilizes the **Tailwind CSS Play CDN** for rapid development and styling. This approach is excellent for prototyping within this environment as it requires no build step.
 
-For a production environment, you should set up a build step using the Tailwind CLI or by integrating it as a PostCSS plugin. This will enable crucial optimizations like purging unused CSS to create a small, efficient stylesheet for your users.
+#### Production Recommendation
+For a production-ready application, it is highly recommended to install Tailwind CSS as a PostCSS plugin or use the Tailwind CLI. This enables crucial build-time optimizations, such as purging unused CSS, which significantly reduces the final stylesheet size and improves load performance for end-users. You can find more details in the [official Tailwind CSS documentation](https://tailwindcss.com/docs/installation).
