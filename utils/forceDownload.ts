@@ -13,7 +13,11 @@ export const forceDownload = async (url: string, fileName: string) => {
     if (!response.ok) {
       throw new Error(`Network response was not ok: ${response.statusText}`);
     }
-    const blob = await response.blob();
+    // Get the raw data as an ArrayBuffer and create a new Blob.
+    // This avoids issues with problematic MIME types like 'application/octet-stream'
+    // from the server's response headers.
+    const arrayBuffer = await response.arrayBuffer();
+    const blob = new Blob([arrayBuffer]);
     const blobUrl = window.URL.createObjectURL(blob);
     
     // Create a temporary anchor element to trigger the download
