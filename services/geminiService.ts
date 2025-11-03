@@ -14,13 +14,15 @@
 import { GoogleGenAI } from "@google/genai";
 import type { GroundingChunk } from '../types';
 
-// The API key is injected by the execution environment. We assume it's available.
-// The `try...catch` block where this function is called will handle any runtime errors
-// related to the API key, preventing the app from crashing.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// The GoogleGenAI instance is now initialized inside the `generateContentWithGrounding` function.
+// This prevents the application from crashing on startup if the API key is not
+// immediately available, as the check is deferred until an actual API call is made,
+// where any potential errors can be caught and handled gracefully.
 
 export async function generateContentWithGrounding(prompt: string): Promise<{ text: string; sources: GroundingChunk[] }> {
   try {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       // Use the full Content structure for robustness.
