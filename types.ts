@@ -18,6 +18,7 @@ export interface ChatMessage {
 
 export interface UserProfile {
   name: string;
+  rollNumber: string;
   email: string;
   major: string;
   yearOfStudy: string;

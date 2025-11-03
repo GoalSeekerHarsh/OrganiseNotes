@@ -82,7 +82,17 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ onClose, onUpload }) => {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onClick={onClose}>
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-lg relative transition-transform transform scale-95 animate-fade-in-up" style={{animationDuration: '0.3s'}} onClick={e => e.stopPropagation()}>
-            <button onClick={onClose} disabled={isLoading} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 disabled:opacity-50">
+            
+            {/* Loading Overlay */}
+            {isLoading && (
+                <div className="absolute inset-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-2xl transition-opacity duration-300 animate-fade-in-up">
+                    <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                    <p className="mt-4 text-lg font-semibold text-slate-700 dark:text-slate-200">Uploading...</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Please wait a moment.</p>
+                </div>
+            )}
+
+            <button onClick={onClose} disabled={isLoading} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 disabled:opacity-50 z-10">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
 
@@ -93,7 +103,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ onClose, onUpload }) => {
 
                     <div 
                         onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop}
-                        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragging ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20' : 'border-slate-300 dark:border-slate-600 hover:border-emerald-400'} ${isLoading ? 'opacity-50' : ''}`}
+                        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragging ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20' : 'border-slate-300 dark:border-slate-600 hover:border-emerald-400'}`}
                     >
                         <input type="file" className="hidden" id="file-upload" onChange={(e) => handleFileChange(e.target.files ? e.target.files[0] : null)} disabled={isLoading} />
                         <label htmlFor="file-upload" className={isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}>
@@ -104,7 +114,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ onClose, onUpload }) => {
                         </label>
                     </div>
 
-                    <div className={`mt-4 ${isLoading ? 'opacity-50' : ''}`}>
+                    <div className="mt-4">
                         <label htmlFor="tags" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Custom Tags (press Enter to add)</label>
                         <div className="mt-1 flex flex-wrap gap-2 items-center p-2 border border-slate-300 dark:border-slate-600 rounded-md">
                             {tags.map(tag => (
@@ -122,7 +132,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ onClose, onUpload }) => {
                 <div className="bg-slate-50 dark:bg-slate-800/50 px-6 py-4 flex justify-end space-x-3 rounded-b-2xl">
                     <button type="button" onClick={onClose} disabled={isLoading} className="px-4 py-2 bg-slate-200 text-slate-800 rounded-lg hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 disabled:opacity-50">Cancel</button>
                     <button type="submit" disabled={isLoading || !file} className="px-4 py-2 w-28 text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 disabled:bg-emerald-300 dark:disabled:bg-slate-600 disabled:cursor-not-allowed flex items-center justify-center">
-                        {isLoading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : 'Upload'}
+                        Upload
                     </button>
                 </div>
             </form>

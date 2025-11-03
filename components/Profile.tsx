@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import type { UserProfile } from '../types';
 
@@ -46,18 +45,24 @@ const Profile: React.FC<ProfileProps> = ({ profile, onUpdateProfile }) => {
       </div>
 
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm p-6 border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center space-x-6 mb-8">
+        <div className="flex items-center space-x-6 mb-8 pb-8 border-b border-slate-200 dark:border-slate-700">
           <div className="w-20 h-20 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center text-4xl font-bold text-slate-600 dark:text-slate-300 ring-4 ring-white dark:ring-slate-800">
              {profile.name.charAt(0)}
           </div>
           <div>
             <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{profile.name}</h3>
-            <p className="text-slate-500 dark:text-slate-400">{profile.email}</p>
+            <p className="text-slate-500 dark:text-slate-400">Roll Number: {profile.rollNumber}</p>
+             <p className="text-sm text-slate-500 dark:text-slate-400">{profile.email}</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit}>
+          <h3 className="text-lg font-semibold mb-4 text-slate-800 dark:text-slate-100">Editable Information</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Preferred Name</label>
+              <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} disabled={!isEditing} className="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm disabled:bg-slate-100 dark:disabled:bg-slate-700/50 disabled:cursor-not-allowed"/>
+            </div>
             <div>
               <label htmlFor="major" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Major</label>
               <input type="text" name="major" id="major" value={formData.major} onChange={handleChange} disabled={!isEditing} className="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm disabled:bg-slate-100 dark:disabled:bg-slate-700/50 disabled:cursor-not-allowed"/>

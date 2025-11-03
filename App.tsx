@@ -8,9 +8,10 @@ import Certificates from './components/Certificates';
 import Curriculum from './components/Curriculum';
 import UploadDialog from './components/UploadDialog';
 import FileViewerModal from './components/FileViewerModal';
+import Login from './components/Login';
 import { Toast } from './components/Toast';
-import { mockDocuments } from './data/mockData';
 import { uploadFile } from './services/fileUploadService';
+import { getUser, updateUserProfile, updateUserDocuments } from './services/userService';
 import type { UserProfile, Document } from './types';
 
 // --- Icons ---
@@ -30,16 +31,19 @@ const getInitialTheme = (): 'light' | 'dark' => {
   return 'light';
 };
 
+export interface UserData {
+  profile: UserProfile;
+  documents: Document[];
+}
+
 const App: React.FC = () => {
   const [theme, setTheme] = useState(getInitialTheme);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState('dashboard');
   
-  const [documents, setDocuments] = useState<Document[]>(mockDocuments);
-  const [profile, setProfile] = useState<UserProfile>({
-    name: 'IISERB Student', email: 'student@iiserb.ac.in', major: 'Biological Sciences',
-    yearOfStudy: '3rd Year', contact: '+91-XXXXXXXXXX', avatarUrl: 'S',
-  });
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
 
   const [isUploadOpen, setUploadOpen] = useState(false);
   const [isFileViewerOpen, setFileViewerOpen] = useState(false);
@@ -48,6 +52,21 @@ const App: React.FC = () => {
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+  // Check for authentication state on component mount
+  useEffect(() => {
+    const loggedInEmail = sessionStorage.getItem('loggedInEmail');
+    if (loggedInEmail) {
+        const userData = getUser(loggedInEmail);
+        if (userData) {
+            setIsAuthenticated(true);
+            setProfile(userData.profile);
+            setDocuments(userData.documents);
+        } else {
+            // Data inconsistency, clear session
+            sessionStorage.removeItem('loggedInEmail');
+        }
+    }
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -63,6 +82,22 @@ const App: React.FC = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+  
+  const handleLogin = (userData: UserData) => {
+    setIsAuthenticated(true);
+    sessionStorage.setItem('loggedInEmail', userData.profile.email);
+    setProfile(userData.profile);
+    setDocuments(userData.documents);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('loggedInEmail');
+    setCurrentPage('dashboard'); // Reset to default page on logout
+    setProfileMenuOpen(false);
+    setProfile(null);
+    setDocuments([]);
+  };
 
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
     setToast({ message, type });
@@ -70,7 +105,12 @@ const App: React.FC = () => {
 
   const toggleTheme = () => setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   const handleNavigate = (page: string) => setCurrentPage(page);
-  const handleUpdateProfile = (updatedProfile: UserProfile) => setProfile(updatedProfile);
+  
+  const handleUpdateProfile = (updatedProfile: UserProfile) => {
+    setProfile(updatedProfile);
+    updateUserProfile(updatedProfile.email, updatedProfile);
+    showToast('Profile updated successfully!', 'success');
+  };
 
   const handleOpenFile = (doc: Document) => {
     setSelectedDocument(doc);
@@ -78,14 +118,24 @@ const App: React.FC = () => {
   };
   
   const handleUploadDocument = async (newDoc: Omit<Document, 'id' | 'uploadDate' | 'url'>) => {
-    if (!newDoc.file) return;
+    if (!newDoc.file || !profile) return;
+    
     const fileUrl = await uploadFile(newDoc.file);
     const docToAdd: Document = { ...newDoc, id: crypto.randomUUID(), uploadDate: new Date().toISOString(), url: fileUrl };
-    setDocuments(prev => [docToAdd, ...prev]);
+    
+    const updatedDocuments = [docToAdd, ...documents];
+    setDocuments(updatedDocuments);
+    updateUserDocuments(profile.email, updatedDocuments);
+    showToast('Document uploaded successfully!', 'success');
   };
   
   const handleDeleteDocument = (docId: string) => {
-    setDocuments(prevDocuments => prevDocuments.filter(doc => doc.id !== docId));
+    if (!profile) return;
+
+    const updatedDocuments = documents.filter(doc => doc.id !== docId);
+    setDocuments(updatedDocuments);
+    updateUserDocuments(profile.email, updatedDocuments);
+    
     setFileViewerOpen(false);
     setSelectedDocument(null);
     showToast('Document deleted successfully!', 'success');
@@ -102,10 +152,16 @@ const App: React.FC = () => {
       case 'skills': return <Skills {...commonProps} />;
       case 'certificates': return <Certificates {...commonProps} />;
       case 'curriculum': return <Curriculum {...commonProps} />;
-      case 'profile': return <Profile profile={profile} onUpdateProfile={handleUpdateProfile} />;
+      case 'profile': 
+        if (!profile) return null;
+        return <Profile profile={profile} onUpdateProfile={handleUpdateProfile} />;
       default: return <Dashboard {...commonProps} />;
     }
   };
+
+  if (!isAuthenticated || !profile) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50">
@@ -128,7 +184,7 @@ const App: React.FC = () => {
                   <button onClick={() => { handleNavigate('profile'); setProfileMenuOpen(false); }} className="w-full text-left flex items-center space-x-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
                     <UserIcon /><span>Profile</span>
                   </button>
-                  <button onClick={() => { /* Logout logic */ setProfileMenuOpen(false); }} className="w-full text-left flex items-center space-x-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                  <button onClick={handleLogout} className="w-full text-left flex items-center space-x-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
                     <LogoutIcon /><span>Logout</span>
                   </button>
                 </div>
