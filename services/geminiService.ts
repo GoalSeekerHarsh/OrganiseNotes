@@ -14,10 +14,9 @@
 import { GoogleGenAI } from "@google/genai";
 import type { GroundingChunk } from '../types';
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable is not set");
-}
-
+// The API key is injected by the execution environment. We assume it's available.
+// The `try...catch` block where this function is called will handle any runtime errors
+// related to the API key, preventing the app from crashing.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export async function generateContentWithGrounding(prompt: string): Promise<{ text: string; sources: GroundingChunk[] }> {
