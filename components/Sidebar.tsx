@@ -1,5 +1,24 @@
 import React from 'react';
 
+const LogoIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg 
+    className={className}
+    viewBox="0 0 24 24" 
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M3.27 6.96L12 12l8.73-5.04"></path>
+    <path d="M12 22.08V12"></path>
+  </svg>
+);
+
+
 interface SidebarProps {
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -47,7 +66,13 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, onNavigate, isCollapsed 
   ];
 
   return (
-    <aside className={`flex-shrink-0 bg-white dark:bg-gray-800 p-4 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'}`}>
+    <aside className={`flex-shrink-0 bg-white dark:bg-gray-800 p-4 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 flex flex-col ${isCollapsed ? 'w-20' : 'w-64'}`}>
+      <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center' : 'px-2'} mb-8 transition-all duration-300`}>
+        <LogoIcon className="h-8 w-8 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+        {!isCollapsed && (
+          <span className="text-2xl font-bold text-gray-800 dark:text-gray-200 whitespace-nowrap overflow-hidden">SkillHub</span>
+        )}
+      </div>
       <nav className="flex flex-col space-y-2">
         {navItems.map(item => (
           <NavItem key={item.pageName} {...item} currentPage={currentPage} onNavigate={onNavigate} isCollapsed={isCollapsed} />

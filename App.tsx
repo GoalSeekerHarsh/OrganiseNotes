@@ -156,7 +156,6 @@ const App: React.FC = () => {
              <button onClick={toggleSidebar} className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
                 {isSidebarCollapsed ? <MenuIcon /> : <CloseIcon />}
             </button>
-            <h1 className="text-xl font-semibold hidden sm:block">SkillHub</h1>
           </div>
           <div className="flex items-center space-x-4">
             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
