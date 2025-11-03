@@ -24,8 +24,11 @@ export async function generateContentWithGrounding(prompt: string): Promise<{ te
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      // FIX: The `contents` property for a simple text prompt should be a string.
-      contents: prompt,
+      // Use the full Content structure for robustness.
+      contents: [{
+        role: 'user',
+        parts: [{ text: prompt }]
+      }],
       config: {
         tools: [{ googleSearch: {} }],
       },
