@@ -62,7 +62,8 @@ export function loginOrRegisterUser(email: string, password: string): User | nul
         avatarUrl: 'S',
       },
       password: password,
-      documents: mockDocuments, // Give new users the mock documents to start with
+      // Give new users a copy of the mock documents to prevent reference issues
+      documents: [...mockDocuments], 
     };
     users[lowerCaseEmail] = newUser;
     saveUsers(users);

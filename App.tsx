@@ -121,7 +121,15 @@ const App: React.FC = () => {
     if (!newDoc.file || !profile) return;
     
     const fileUrl = await uploadFile(newDoc.file);
-    const docToAdd: Document = { ...newDoc, id: crypto.randomUUID(), uploadDate: new Date().toISOString(), url: fileUrl };
+    // Create the final document object for persistence, omitting the temporary 'file' property.
+    const docToAdd: Document = {
+      id: crypto.randomUUID(),
+      name: newDoc.name,
+      type: newDoc.type,
+      uploadDate: new Date().toISOString(),
+      tags: newDoc.tags,
+      url: fileUrl, // The persistent URL is what matters.
+    };
     
     const updatedDocuments = [docToAdd, ...documents];
     setDocuments(updatedDocuments);
