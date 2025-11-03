@@ -17,8 +17,8 @@ const Curriculum: React.FC<CurriculumProps> = ({ documents, onOpenFile, onOpenUp
 
   return (
     <div>
-      <h2 className="text-3xl font-semibold mb-2 text-gray-800 dark:text-gray-200">College Curriculum</h2>
-      <p className="mb-6 text-gray-600 dark:text-gray-400">Notes, assignments, and resources for your courses.</p>
+      <h2 className="text-3xl font-bold mb-2 text-slate-800 dark:text-slate-100">College Curriculum</h2>
+      <p className="mb-6 text-slate-500 dark:text-slate-400">Notes, assignments, and resources for your courses.</p>
       
       <DocumentGrid 
         documents={curriculumDocs} 

@@ -6,9 +6,7 @@ interface ChatMessageProps {
   message: ChatMessage;
 }
 
-// A simple utility to render markdown-like text (bold, links)
 const SimpleMarkdownRenderer: React.FC<{ text: string }> = ({ text }) => {
-    // This is a very basic renderer. A real app might use a library like 'react-markdown'.
     const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g);
 
     return (
@@ -21,7 +19,7 @@ const SimpleMarkdownRenderer: React.FC<{ text: string }> = ({ text }) => {
                     return <em key={index}>{part.slice(1, -1)}</em>;
                 }
                  if (part.startsWith('`') && part.endsWith('`')) {
-                    return <code key={index} className="bg-gray-100 dark:bg-gray-600 px-1 rounded text-sm">{part.slice(1, -1)}</code>;
+                    return <code key={index} className="bg-slate-200 dark:bg-slate-600/50 px-1 py-0.5 rounded text-sm font-mono">{part.slice(1, -1)}</code>;
                 }
                 return <span key={index}>{part}</span>;
             })}
@@ -36,8 +34,8 @@ const GroundingSources: React.FC<{ sources: GroundingChunk[] }> = ({ sources }) 
   }
 
   return (
-    <div className="mt-2 pt-2 border-t border-gray-300 dark:border-gray-600">
-      <h4 className="text-xs font-semibold mb-1 text-gray-600 dark:text-gray-400">Sources:</h4>
+    <div className="mt-3 pt-2 border-t border-slate-200 dark:border-slate-600/50">
+      <h4 className="text-xs font-semibold mb-1 text-slate-500 dark:text-slate-400">Sources:</h4>
       <ol className="list-decimal list-inside space-y-1">
         {sources.map((source, index) => {
           const info = source.web || source.maps;
@@ -48,7 +46,7 @@ const GroundingSources: React.FC<{ sources: GroundingChunk[] }> = ({ sources }) 
                 href={info.uri}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-600 dark:text-indigo-400 hover:underline break-words"
+                className="text-emerald-600 dark:text-emerald-400 hover:underline break-words"
               >
                 {info.title || info.uri}
               </a>
@@ -65,13 +63,13 @@ const ChatMessageComponent: React.FC<ChatMessageProps> = ({ message }) => {
   return (
     <div className={`flex ${isModel ? 'justify-start' : 'justify-end'}`}>
       <div
-        className={`rounded-lg px-4 py-2 max-w-sm md:max-w-md ${
+        className={`rounded-2xl px-4 py-2 max-w-sm md:max-w-md shadow-sm ${
           isModel
-            ? 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
-            : 'bg-indigo-600 text-white'
+            ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-bl-lg'
+            : 'bg-emerald-600 text-white rounded-br-lg'
         }`}
       >
-        <div className="prose prose-sm dark:prose-invert max-w-none prose-p:my-2">
+        <div className="prose prose-sm dark:prose-invert max-w-none prose-p:my-2 prose-p:text-inherit">
             <SimpleMarkdownRenderer text={message.text} />
         </div>
         {isModel && message.sources && <GroundingSources sources={message.sources} />}

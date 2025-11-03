@@ -15,8 +15,8 @@ const Certificates: React.FC<CertificatesProps> = ({ documents, onOpenFile, onOp
 
   return (
     <div>
-      <h2 className="text-3xl font-semibold mb-2 text-gray-800 dark:text-gray-200">Certificates</h2>
-      <p className="mb-6 text-gray-600 dark:text-gray-400">Organize certificates for your resume.</p>
+      <h2 className="text-3xl font-bold mb-2 text-slate-800 dark:text-slate-100">Certificates</h2>
+      <p className="mb-6 text-slate-500 dark:text-slate-400">Organize certificates for your resume.</p>
       
       <DocumentGrid 
         documents={certificateDocs} 

@@ -14,8 +14,8 @@ const Skills: React.FC<SkillsProps> = ({ documents, onOpenFile, onOpenUploadDial
 
   return (
     <div>
-      <h2 className="text-3xl font-semibold mb-2 text-gray-800 dark:text-gray-200">Skills Earned</h2>
-      <p className="mb-6 text-gray-600 dark:text-gray-400">Upload and manage proofs of your skills.</p>
+      <h2 className="text-3xl font-bold mb-2 text-slate-800 dark:text-slate-100">Skills Earned</h2>
+      <p className="mb-6 text-slate-500 dark:text-slate-400">Upload and manage proofs of your skills.</p>
       
       <DocumentGrid 
         documents={skillDocs} 

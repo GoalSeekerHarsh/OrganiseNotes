@@ -2,15 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%234f46e5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><circle cx="12" cy="12" r="3"></circle><path d="M3.27 6.96L12 12l8.73-5.04"></path><path d="M12 22.08V12"></path></svg>' />
+    <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><circle cx="12" cy="12" r="3"></circle><path d="M3.27 6.96L12 12l8.73-5.04"></path><path d="M12 22.08V12"></path></svg>' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IISERB Notes Organiser</title>
+    <title>SkillHub - Student Document Organiser</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       // On page load or when changing themes, best to add inline in `head` to avoid FOUC
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark')
       } else {
         document.documentElement.classList.remove('dark')
+      }
+
+      // Configure TailwindCSS for CDN
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {},
+        },
+        plugins: [],
       }
     </script>
     <style>
@@ -27,6 +37,29 @@
       .animate-fade-in-down {
         animation: fade-in-down 0.5s ease-out forwards;
       }
+      
+      @keyframes fade-in-up {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 0.5s ease-out forwards;
+      }
+
+      body {
+        background-color: #f8fafc; /* slate-50 */
+        background-image: radial-gradient(circle at top right, rgba(16, 185, 129, 0.05) 0%, transparent 40%), radial-gradient(circle at bottom left, rgba(52, 211, 153, 0.05) 0%, transparent 30%);
+      }
+      .dark body {
+        background-color: #020617; /* slate-950 */
+        background-image: radial-gradient(circle at top right, rgba(16, 185, 129, 0.1) 0%, transparent 40%), radial-gradient(circle at bottom left, rgba(52, 211, 153, 0.1) 0%, transparent 30%);
+      }
     </style>
   <script type="importmap">
 {
@@ -39,7 +72,7 @@
 }
 </script>
 </head>
-  <body class="bg-gray-50 dark:bg-gray-900">
+  <body class="bg-slate-50 dark:bg-slate-950">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
